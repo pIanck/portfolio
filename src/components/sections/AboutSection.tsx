@@ -59,7 +59,7 @@ export function AboutSection() {
                   pathLength: {
                     duration: item.duration,
                     delay: item.delay,
-                    ease: item.ease,
+                    ease: item.ease as any,
                   },
                   opacity: {
                     duration: 0.01,
