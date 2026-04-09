@@ -200,14 +200,14 @@ export const site = {
       ],
     },
     {
-      title: "Project / Leadership Experience (Placeholder)",
-      titleZh: "项目 / 领导力经历（示例）",
+      title: "Project / Leadership Experience",
+      titleZh: "项目 / 领导力经历",
       org: "Tektronix",
       orgZh: "泰克（Tektronix）",
       location: "Beijing",
       locationZh: "北京",
-      period: "2024 — Present",
-      periodZh: "2024 — 至今",
+      period: "2021",
+      periodZh: "2021年",
       bullets: [
         "Led an analytics project from problem definition to deliverable, partnering with non-technical stakeholders.",
         "Created a lightweight dashboard or reporting cadence to support decision-making.",
@@ -219,7 +219,7 @@ export const site = {
     },
   ] satisfies ExperienceItem[],
   contact: {
-    email: "your.email@example.com",
+    email: "jiyuanzhao5@gmail.com",
     linkedin: "https://www.linkedin.com/in/your-handle/",
     github: "https://github.com/your-handle",
   },

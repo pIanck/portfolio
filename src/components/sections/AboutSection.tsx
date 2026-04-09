@@ -28,77 +28,120 @@ const constructionLines = [
 const continuousSpiralPath = "M 0 0 A 610 610 0 0 0 610 610 A 377 377 0 0 0 987 233 A 233 233 0 0 0 754 0 A 144 144 0 0 0 610 144 A 89 89 0 0 0 699 233 A 55 55 0 0 0 754 178 A 34 34 0 0 0 720 144 A 21 21 0 0 0 699 165 A 13 13 0 0 0 712 178 A 8 8 0 0 0 720 170 A 5 5 0 0 0 715 165 A 3 3 0 0 0 712 168 A 2 2 0 0 0 714 170";
 
 export function AboutSection() {
+  const aboutMeContent = (
+    <>
+      <p className="text-[12px] font-semibold tracking-[0.18em] uppercase text-[#7f8d84]">
+        OVERVIEW
+      </p>
+
+      <h2 className="mt-4 max-w-lg text-balance text-[clamp(30px,3.1vw,42px)] font-semibold leading-[1.08] tracking-[-0.028em] text-[#eef2ee]">
+        {site.about.title}
+      </h2>
+
+      <p className="mt-6 max-w-[52ch] text-pretty text-[clamp(16px,1.1vw,20px)] font-normal leading-[1.75] text-[#b8c3bc]">
+        <span className="block">I work where data meets operations.</span>
+        <span className="mt-2 block">I turn data into decisions.</span>
+        <span className="mt-2 block">我把数据变成决策。我专注于数据与业务的交界。</span>
+      </p>
+    </>
+  );
+
   return (
     <section
       id="about"
       className="relative z-10 min-h-screen overflow-hidden bg-[#0b1220] py-24 sm:py-32"
     >
-      <motion.div
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
-        aria-hidden
-      >
-        <svg
-          className="absolute inset-0 h-full w-full opacity-60"
-          viewBox="-2 -2 991 614"
-          preserveAspectRatio="xMaxYMid meet"
+      {/* Background SVG and Desktop "About me" anchored to exact geometry */}
+      <div className="absolute inset-0 z-0 flex items-center justify-end overflow-hidden pointer-events-none">
+        <div 
+          className="relative w-full h-full" 
+          style={{ 
+            aspectRatio: "991 / 614", 
+            maxHeight: "100%", 
+            maxWidth: "100%" 
+          }}
         >
-          <g transform="translate(-120, 0)">
-            {/* Construction Lines */}
-            {constructionLines.map((item) => (
+          <svg
+            className="absolute inset-0 h-full w-full opacity-60"
+            viewBox="-2 -2 991 614"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <g transform="translate(-120, 0)">
+              {/* Construction Lines */}
+              {constructionLines.map((item) => (
+                <motion.path
+                  key={item.path}
+                  d={item.path}
+                  fill="none"
+                  stroke={item.stroke}
+                  strokeWidth={item.strokeWidth}
+                  strokeLinecap={(item as any).lineCap || "round"}
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  whileInView={{ pathLength: 1, opacity: 1 }}
+                  viewport={{ once: true, amount: 0.01 }}
+                  transition={{
+                    pathLength: {
+                      duration: item.duration,
+                      delay: item.delay,
+                      ease: item.ease as any,
+                    },
+                    opacity: {
+                      duration: 0.01,
+                      delay: item.delay,
+                    }
+                  }}
+                />
+              ))}
+              
+              {/* Continuous Golden Spiral */}
               <motion.path
-                key={item.path}
-                d={item.path}
+                d={continuousSpiralPath}
                 fill="none"
-                stroke={item.stroke}
-                strokeWidth={item.strokeWidth}
-                strokeLinecap={(item as any).lineCap || "round"}
+                stroke="rgba(232, 202, 144, 0.65)"
+                strokeWidth={1.8}
+                strokeLinecap="round"
                 initial={{ pathLength: 0, opacity: 0 }}
                 whileInView={{ pathLength: 1, opacity: 1 }}
                 viewport={{ once: true, amount: 0.01 }}
                 transition={{
                   pathLength: {
-                    duration: item.duration,
-                    delay: item.delay,
-                    ease: item.ease as any,
+                    duration: 4.5,
+                    delay: 1.2,
+                    ease: [0.4, 0, 0.2, 1],
                   },
                   opacity: {
                     duration: 0.01,
-                    delay: item.delay,
+                    delay: 1.2,
                   }
                 }}
               />
-            ))}
-            
-            {/* Continuous Golden Spiral */}
-            <motion.path
-              d={continuousSpiralPath}
-              fill="none"
-              stroke="rgba(232, 202, 144, 0.65)"
-              strokeWidth={1.8}
-              strokeLinecap="round"
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 1 }}
-              viewport={{ once: true, amount: 0.01 }}
-              transition={{
-                pathLength: {
-                  duration: 4.5, // Total duration for the single continuous stroke
-                  delay: 1.2,    // Starts after the initial construction lines
-                  ease: [0.4, 0, 0.2, 1], // Smooth easing for the entire spiral
-                },
-                opacity: {
-                  duration: 0.01,
-                  delay: 1.2,
-                }
-              }}
-            />
-          </g>
-        </svg>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_45%,rgba(11,18,32,0.08),rgba(11,18,32,0.38)_58%,rgba(11,18,32,0.62)_100%)]" />
-      </motion.div>
+            </g>
+          </svg>
 
-      <Container className="max-w-[80rem] px-4 sm:px-6 lg:px-3 xl:px-4">
+          {/* Desktop About Me - perfectly anchored to the 49.65% / 38.27% intersection */}
+          <motion.div 
+            className="absolute z-10 pointer-events-auto hidden lg:block"
+            style={{ 
+              left: "49.65%", 
+              top: "38.27%", 
+              width: "45%", 
+              paddingLeft: "3rem", // Offset slightly right of the vertical line
+              paddingTop: "2rem"   // Offset slightly below the horizontal line
+            }}
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.95, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {aboutMeContent}
+          </motion.div>
+        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_45%,rgba(11,18,32,0.08),rgba(11,18,32,0.38)_58%,rgba(11,18,32,0.62)_100%)] pointer-events-none" />
+      </div>
+
+      <Container className="relative z-10 w-full max-w-[80rem] px-4 sm:px-6 lg:px-3 xl:px-4 pointer-events-none">
         <motion.div
-          className="relative z-10 grid gap-14 lg:grid-cols-12 lg:gap-14 xl:gap-20"
+          className="grid gap-14 lg:grid-cols-12 lg:gap-14 xl:gap-20 pointer-events-auto"
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
@@ -108,9 +151,7 @@ export function AboutSection() {
           <div className="lg:col-span-4 lg:col-start-2 lg:mt-32 xl:mt-40 lg:-translate-x-14">
             <div className="flex flex-col gap-5 sm:gap-6 relative">
               {site.about.highlights.map((item, idx) => {
-                // Calculate stepped offset to follow the golden curve
-                // Base left offset is 0, increasing as we go down
-                const stepOffsets = [0, 26, 70, 114]; // Matches the requested left pixel offsets (52, 78, 122, 166) relative to the first item
+                const stepOffsets = [0, 26, 70, 114];
                 
                 return (
                   <motion.div
@@ -138,30 +179,18 @@ export function AboutSection() {
             </div>
           </div>
         </motion.div>
+
+        {/* Mobile About Me - normal document flow */}
+        <motion.div 
+          className="relative mt-20 px-4 sm:px-6 z-10 lg:hidden pointer-events-auto"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.95, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {aboutMeContent}
+        </motion.div>
       </Container>
-
-      {/* About me under the red corner on the right */}
-      <motion.div 
-        className="relative mt-20 px-4 sm:px-6 lg:absolute lg:top-[55%] lg:left-[60%] lg:-translate-y-1/2 lg:mt-0 lg:w-[40%] lg:px-0 z-10"
-        initial={{ opacity: 0, y: 18 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.95, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <p className="text-[12px] font-semibold tracking-[0.18em] uppercase text-[#7f8d84]">
-          OVERVIEW
-        </p>
-
-        <h2 className="mt-4 max-w-lg text-balance text-[clamp(30px,3.1vw,42px)] font-semibold leading-[1.08] tracking-[-0.028em] text-[#eef2ee]">
-          {site.about.title}
-        </h2>
-
-        <p className="mt-6 max-w-[52ch] text-pretty text-[clamp(16px,1.1vw,20px)] font-normal leading-[1.75] text-[#b8c3bc]">
-          <span className="block">I work where data meets operations.</span>
-          <span className="mt-2 block">I turn data into decisions.</span>
-          <span className="mt-2 block">我把数据变成决策。我专注于数据与业务的交界。</span>
-        </p>
-      </motion.div>
     </section>
   );
 }
